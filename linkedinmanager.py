@@ -1,21 +1,21 @@
 import streamlit as st
 from openai import OpenAI
 
-# ---------------- OPENAI CLIENT ---------------- #
+
 client = OpenAI()
 
-# ---------------- STREAMLIT CONFIG ---------------- #
+
 st.set_page_config(
     page_title="Personal LinkedIn Manager AI",
     page_icon="💼",
     layout="centered"
 )
 
-# ---------------- SESSION STATE INIT ---------------- #
+
 if "user_input" not in st.session_state:
     st.session_state.user_input = ""
 
-# ---------------- MASTER PROMPT ---------------- #
+
 LINKEDIN_MANAGER_PROMPT = """
 You are my personal LinkedIn Growth Manager AI.
 
@@ -67,7 +67,7 @@ def generate_linkedin_content(user_request: str) -> str:
     return response.choices[0].message.content
 
 
-# ---------------- STYLING ---------------- #
+
 st.markdown("""
 <style>
 .stApp { background-color: #0e1117; color: #e6e6e6; }
@@ -93,7 +93,7 @@ h1, h2, h3 { color: white; font-weight: 700; }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- HEADER ---------------- #
+
 st.markdown("<h1 style='text-align:center;'>💼 Personal LinkedIn Manager AI</h1>", unsafe_allow_html=True)
 st.markdown(
     "<p style='text-align:center;'>Your AI assistant for LinkedIn growth, content & consistency</p>",
@@ -102,7 +102,7 @@ st.markdown(
 
 st.markdown("---")
 
-# ---------------- OPTIONS ---------------- #
+
 option = st.selectbox(
     "What do you want to do?",
     [
@@ -113,7 +113,7 @@ option = st.selectbox(
     ]
 )
 
-# ---------------- CONDITIONAL INPUT ---------------- #
+
 if option == "Write a post about something I built":
     st.text_area(
         "Describe what you built:",
@@ -129,7 +129,7 @@ elif option == "Optimize an existing LinkedIn post":
         height=150
     )
 
-# ---------------- GENERATE ---------------- #
+
 if st.button("✨ Generate"):
 
     # Validation
@@ -160,7 +160,7 @@ if st.button("✨ Generate"):
                 f"Optimize this LinkedIn post for better reach and recruiter appeal:\n{st.session_state.user_input}"
             )
 
-    # ---------------- PARSE OUTPUT ---------------- #
+   
     try:
         decision = raw_output.split("POST_DECISION:")[1].split("POST_TYPE:")[0].strip()
         post_type = raw_output.split("POST_TYPE:")[1].split("POST_CONTENT:")[0].strip()
